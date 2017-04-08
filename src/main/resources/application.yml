@@ -1,0 +1,10 @@
+#server:
+#  port: 8100
+#spring:
+  #mvc:
+    # media-types:
+    #  html: 'text/html'
+    #  json: 'application/json'
+    #  xml: 'application/xml'
+
+
