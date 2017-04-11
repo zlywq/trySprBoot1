@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
 
-import g1.domain.BbsPost;
-import g1.domain.Message;
-import g1.ibatisMapper.BbsPostMapper;
+import g1.domain.*;
+//import g1.ibatisMapper.BbsPostMapper;
 import g1.util.MyBaseException;
 
 @Service
@@ -30,6 +29,8 @@ public class CheckTranService {
 	@Autowired
 	private MessageService messageService;
 	
+	@Autowired
+	UserInfoService userInfoService;
 	
 	
 	@Autowired
@@ -97,7 +98,36 @@ public class CheckTranService {
 	
 	
 	
-	
+	public void checkTran_registerUser(){
+		try{
+			userInfoService.checkTran1noTran();
+		}catch(MyBaseException ex){
+			Map<String,Object> mpData = (Map<String,Object>)ex.getData();
+			long id = (Long)mpData.get("id");
+
+			UserInfo userInfo1 = userInfoService.getById(id);
+			UserLogin userLogin1 = userInfoService.getUserLoginByUserId(id);
+			
+			if (userInfo1 == null || userLogin1 == null){
+				throw new RuntimeException("checkTran1noTran, insert 2 should succeed but not");
+			}
+		}
+		
+		try{
+			userInfoService.checkTran1haveTran();
+		}catch(MyBaseException ex){
+			Map<String,Object> mpData = (Map<String,Object>)ex.getData();
+			long id = (Long)mpData.get("id");
+
+			UserInfo userInfo1 = userInfoService.getById(id);
+			UserLogin userLogin1 = userInfoService.getUserLoginByUserId(id);
+			
+			if (userInfo1 != null || userLogin1 != null){
+				throw new RuntimeException("checkTran1haveTran, insert 2 should fail but not");
+			}
+		}
+		
+	}
 	
 	
 }

@@ -68,5 +68,31 @@ D:\progGreen\mysql-5.6.24-winx64\bin\mysql --host=127.0.0.1 --port=3326 -u"user2
 -------------------------
 
 
+增加了mycat的支持，即把后端的一个主要的mysql换成mycat中间件，mycat后目前连2个mysql实例，每个mysql上2个db。
+参考src\main\resources\dbSchema.txt中的说明。
+
+启动mycat，先配置好相关xml文件
+d:
+cd D:\progGreen\Mycat-server-1.6win\bin
+startup_nowrap.bat
+ctrl+C can stop
+
+D:\progGreen\mysql-5.6.24-winx64\bin\mysql --host=127.0.0.1 --port=8066 -u"uroot" -p"123456"
+
+
+
+
+
+
+
+-------------------------
+
+
+
+
+
+
+
+
 
 

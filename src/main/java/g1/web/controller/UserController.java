@@ -29,7 +29,8 @@ public class UserController {
 
 	@Autowired
 	UserInfoService userInfoService;
-
+	@Autowired
+	CheckTranService checkTranService;
 	
 	@Autowired
 	UtilService utilService;
@@ -94,7 +95,17 @@ public class UserController {
 		return "logreg/userInfo";
 	}
 
-
+	@RequestMapping(value = "/checkTran")
+	public String checkTran(ModelMap model) {
+		try{
+			checkTranService.checkTran_registerUser();
+			model.put(Const.Key_success, true);
+		}catch(Exception e){
+			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
+			return "error";
+		}
+		return "empty";
+	}
 	
 	
 //	/*

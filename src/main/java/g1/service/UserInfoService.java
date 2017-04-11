@@ -19,6 +19,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import cmn2.util.*;
 import g1.domain.*;
 import g1.ibatisMapper.*;
+import g1.util.MyBaseException;
 
 
 
@@ -80,8 +81,7 @@ public class UserInfoService {
 	public Map<String, Object> getUserDataById(long userId){
 		HashMap<String, Object> mapRet = new HashMap<String, Object>();
 		UserInfo userInfo = userInfoMapper.getById(userId);
-		mapRet.put("userInfo", userInfo);		
-		
+		mapRet.put("userInfo", userInfo);
 		return mapRet;
 	}
 	
@@ -133,6 +133,9 @@ public class UserInfoService {
 	
 	@Transactional(rollbackFor=Exception.class)
 	public UserInfo registerUser(UserReg userReg) {
+		return registerUser_in(userReg);
+	}
+	private UserInfo registerUser_in(UserReg userReg) {
 		//check fields。 其中手机验证码的验证比较费时，放到事务中不好，改为放到上层函数去做。
 		checkForRegister(userReg);
 		
@@ -147,7 +150,6 @@ public class UserInfoService {
 		userInfo.setUserId(userId);
 		userInfoMapper.insert(userInfo);
 
-		
 		String pwdHash = EncryptUtil.encrypt(userReg.getPassword());
 		UserLogin userLogin = new UserLogin();
 		userLogin.setUsername(userInfo.getUserId()+"");
@@ -156,6 +158,32 @@ public class UserInfoService {
 		
 		return userInfo;
 	}
+	
+	
+	private void checkTran_registerUserAndThrow(){
+		UserReg userReg = new UserReg();
+		Date dtNow = new Date();
+		long idsome = dtNow.getTime();
+		userReg.setNickName("usr"+idsome);
+		userReg.setMobile(idsome+"");
+		userReg.setPassword("aaa");
+		userReg.setPwd2("aaa");
+		UserInfo usrInfo = registerUser_in(userReg);
+		
+		MyBaseException ex = new MyBaseException();
+		HashMap<String,Object> data = new HashMap<>();
+		data.put("id", usrInfo.getUserId());
+		ex.setData(data);
+		throw ex;
+	}
+	@Transactional(rollbackFor=Exception.class)
+	public void checkTran1haveTran(){
+		checkTran_registerUserAndThrow();
+	}
+	public void checkTran1noTran(){
+		checkTran_registerUserAndThrow();
+	}
+	
 	
 	
 	@Transactional(rollbackFor=Exception.class)

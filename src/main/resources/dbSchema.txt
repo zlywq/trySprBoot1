@@ -113,3 +113,45 @@ CREATE TABLE `Message` (
 
 
 
+/* --------in try mycat below------------------------- */
+
+具体的配置参见  src\main\resources\mycat\*.xml
+
+//bighost1
+CREATE DATABASE mycatdbT0 DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE mycatdbT2 DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+
+//bighost2
+CREATE DATABASE mycatdbT1 DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+CREATE DATABASE mycatdbT3 DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+
+
+use mycatdbT0;
+User表有多个index，暂且只放在一个dataNode中，以后要么把n个索引弄成1或n个全局表，要么另起一个小系统来解决从email或mobile映射到userId的问题。
+
+其他几个表都是所有dataNode中都有，如 users,authorities,persistent_logins,BbsPost
+use mycatdbT0;
+use mycatdbT2;
+use mycatdbT1;
+use mycatdbT3;
+
+目前按这样的配置基本达到代码不用修改，当然这种设计还不够好。
+
+
+
+/* --------in try mycat above ------------------------- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
