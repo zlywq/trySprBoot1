@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 //@EnableWebMvc
 @SpringBootApplication
-@MapperScan(basePackages = "g1.ibatisMapper")
+
 public class TrySprBoot1Application {
 
 	public static void main(String[] args) {

@@ -1,7 +1,7 @@
 
 
 这个例子是从 https://github.com/zlywq/springdemo 升级到spring boot。目标是达到入门并可以实用。
-关键词: spring boot 1.5.2 + spring mvc + spring security + mybatis + session in redis , maven
+关键词: spring boot 1.5.2 + spring mvc + spring security + mybatis + session in redis , maven, 多 datasource 多数据源
 开发环境是spring-tool-suite-3.8.3.RELEASE-e4.6.2-win32-x86_64, java1.8
 目前暂且未按maven的模块的组织形式，都在一个项目中
 
@@ -40,8 +40,32 @@ spring boot内置tomcat，这里也配置了https和http。
 
 -------------------------
 
+增加双datasource
 
+D:\progGreen\mysql-5.6.24-winx64\bin\mysqld.exe  --defaults-file=D:\i\softdata\mysql\cfg1.cnf
+cat cfg1.cnf
+[mysqld]
+datadir = D:/i/softdata/mysql/data1
+port = 3306
 
+先拷贝 $mysqlRoot
+D:\progGreen\mysql-5.6.24-winx64\bin\mysqld.exe  --defaults-file=D:\i\softdata\mysql\cfg2.cnf
+    出错，拷贝D:\progGreen\mysql-5.6.24-winx64\data到D:/i/softdata/mysql/data2，注意不覆盖auto.cnf
+cat cfg2.cnf
+[mysqld]
+datadir = D:/i/softdata/mysql/data2
+port = 3326
+
+D:\progGreen\mysql-5.6.24-winx64\bin\mysql --host=127.0.0.1 --port=3326 -u root -p
+  GRANT ALL PRIVILEGES ON *.* TO 'user2'@'%' IDENTIFIED BY '123456' WITH GRANT OPTION;
+  GRANT ALL PRIVILEGES ON *.* TO 'user2'@'localhost' IDENTIFIED BY '123456' WITH GRANT OPTION;
+  SELECT User, Host, Password FROM mysql.user;
+D:\progGreen\mysql-5.6.24-winx64\bin\mysql --host=127.0.0.1 --port=3326 -u"user2" -p"123456"
+
+关于 springboot + mybatis + 多数据源
+参考这里解决 SpringBoot多数据源及MyBatis配置详解 2016 https://my.oschina.net/angerbaby/blog/715281
+
+-------------------------
 
 
 

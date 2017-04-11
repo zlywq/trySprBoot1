@@ -29,14 +29,14 @@ import g1.util.MyBaseException;
  */
 
 @Controller
-@RequestMapping("/post")
-public class PostController {
+@RequestMapping("/message")
+public class MessageController {
 	
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 
 	@Autowired
-	BbsPostService postService;
+	MessageService messageService;
 	@Autowired
 	CheckTranService checkTranService;
 
@@ -50,10 +50,10 @@ public class PostController {
 	
 	
 	/*
-	 * http://localhost:8080/smmpWeb/post/getById.json?postId=123
+	 * http://localhost:8080/smmpWeb/message/getById.json?messageId=123
 	 */
 	@RequestMapping(value = "/getById")
-	public String getPost(HttpServletRequest request, ModelMap model, long postId) {
+	public String getMessage(HttpServletRequest request, ModelMap model, long messageId) {
 		try{
 			//webContext.setVariable("utilBean", utilBean);
 			//request.getServletContext().setAttribute
@@ -63,26 +63,26 @@ public class PostController {
 //			int i = request.getSession().getMaxInactiveInterval();
 //			logger.debug("request.getSession().getMaxInactiveInterval()="+i);
 			
-			BbsPost post = postService.getById(postId);
-			model.put("post", post);
+			Message message = messageService.getById(messageId);
+			model.put("message", message);
 			model.put(Const.Key_success, true);
 		}catch(Exception e){
 			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
 		}
-		return "post/post";
+		return "message/message";
 	}
 	
-	//@RequestMapping(value = "/getById_json", produces="application/json")//Error resolving template "post/getById_json", template might not exist or might not be accessible by any of the configured Template Resolvers
+	//@RequestMapping(value = "/getById_json", produces="application/json")//Error resolving template "message/getById_json", template might not exist or might not be accessible by any of the configured Template Resolvers
 	@RequestMapping(value = "/getById_json")
 	@ResponseBody
-	public Map<String,Object> getPost(long postId ) {
+	public Map<String,Object> getMessage(long messageId ) {
 		HashMap<String,Object> dtMap = new HashMap<>();
 		try{
 			
 			
 			
-			BbsPost post = postService.getById(postId);
-			dtMap.put("post", post);
+			Message message = messageService.getById(messageId);
+			dtMap.put("message", message);
 			dtMap.put(Const.Key_success, true);
 		}catch(Exception e){
 			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, dtMap);
@@ -94,24 +94,24 @@ public class PostController {
 	
 	
 	/*
-	 * http://localhost:8080/smmpWeb/post/getPosts.json
+	 * http://localhost:8080/smmpWeb/message/getMessages.json
 	 */
-	@RequestMapping(value = "/getPosts")
-	public String getPosts(ModelMap model) {
+	@RequestMapping(value = "/getMessages")
+	public String getMessages(ModelMap model) {
 		try{
-			List<BbsPost> postList = postService.getPosts();
-			model.put("postList", postList);
+			List<Message> messageList = messageService.getMessages();
+			model.put("messageList", messageList);
 			model.put(Const.Key_success, true);
 		}catch(Exception e){
 			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
 		}
-		return "post/postList";
+		return "message/messageList";
 	}
 	
 	@RequestMapping(value = "/checkTran")
 	public String checkTran(ModelMap model) {
 		try{
-			checkTranService.checkTranPost();
+			checkTranService.checkTranMessage();
 			model.put(Const.Key_success, true);
 		}catch(Exception e){
 			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
@@ -121,16 +121,16 @@ public class PostController {
 	}
 	
 	/*
-	 * http://localhost:8080/smmpWeb/post/insert.json?title=aa&content=aaa
+	 * http://localhost:8080/smmpWeb/message/insert.json?title=aa&content=aaa
 	 */
 	@RequestMapping(value = "/insert")
-	public String insert(ModelMap model, BbsPost post) {
+	public String insert(ModelMap model, Message message) {
 		try{
 			long userIdInSession = Util1.getUserIdInSession();
-			post.setUserId(userIdInSession);
+			message.setUserId(userIdInSession);
 			
-			postService.insert(post);
-			model.put("postId", post.getPostId());
+			messageService.insert(message);
+			model.put("messageId", message.getMessageId());
 			model.put(Const.Key_success, true);
 		}catch(Exception e){
 			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
@@ -140,15 +140,15 @@ public class PostController {
 	
 	
 	/*
-	 * http://localhost:8080/smmpWeb/post/update.json?postId=12&title=aa&content=aaa
+	 * http://localhost:8080/smmpWeb/message/update.json?messageId=12&title=aa&content=aaa
 	 */
 	@RequestMapping(value = "/update")
-	public String update(ModelMap model, BbsPost post) {
+	public String update(ModelMap model, Message message) {
 		try{
 			long userIdInSession = Util1.getUserIdInSession();
-			post.setUserId(userIdInSession);
+			message.setUserId(userIdInSession);
 			
-			postService.update(post);
+			messageService.update(message);
 			model.put(Const.Key_success, true);
 		}catch(Exception e){
 			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
@@ -158,13 +158,13 @@ public class PostController {
 	
 	
 	/*
-	 * http://localhost:8080/smmpWeb/post/delete.json?postId=12
+	 * http://localhost:8080/smmpWeb/message/delete.json?messageId=12
 	 */
 	@RequestMapping(value = "/delete")
-	public String delete(ModelMap model, long postId) {
+	public String delete(ModelMap model, long messageId) {
 		try{
 			long userIdInSession = Util1.getUserIdInSession();
-			postService.delete(postId, userIdInSession);
+			messageService.delete(messageId, userIdInSession);
 			model.put(Const.Key_success, true);
 		}catch(Exception e){
 			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);

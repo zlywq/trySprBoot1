@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @author 
  * @since 
  */
-@ConfigurationProperties(prefix = "druid")
+//@ConfigurationProperties(prefix = "druid")
 public class DruidProperties {
     private String url;
     private String username;

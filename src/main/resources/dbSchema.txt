@@ -84,15 +84,32 @@ CREATE TABLE `BbsPost` (
 CREATE INDEX IDX_BbsPost_userId on `BbsPost` (`userId`); 
 
 
-
 /*
 ALTER TABLE tableName ADD COLUMN columnName varchar(30);
 */
 
 
 
+/* --------in 2nd datasource below------------------------- */
+
+#DROP DATABASE IF EXISTS sprdemo;
+CREATE DATABASE sprdemo DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+use sprdemo;
+
+CREATE TABLE `Message` (
+  `messageId` BIGINT NOT NULL ,
+  `userId` BIGINT NOT NULL ,
+  `groupId` BIGINT NOT NULL ,
+  `title` varchar(200) NOT NULL ,
+  `content` varchar(1000) NOT NULL,
+  `isDeleted` TINYINT NOT NULL DEFAULT 0,
+  `createTime` INT NOT NULL DEFAULT 0,
+  `updateTime` INT NOT NULL DEFAULT 0,
+  PRIMARY KEY (`messageId`)
+) ENGINE=InnoDB;
 
 
+/* --------in 2nd datasource above ------------------------- */
 
 
 
