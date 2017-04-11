@@ -108,6 +108,18 @@ public class MessageController {
 		return "message/messageList";
 	}
 	
+	@RequestMapping(value = "/getOnlyDeleted")
+	public String getOnlyDeleted(ModelMap model) {
+		try{
+			List<Message> messageList = messageService.getOnlyDeleted();
+			model.put("messageList", messageList);
+			model.put(Const.Key_success, true);
+		}catch(Exception e){
+			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
+		}
+		return "message/messageList";
+	}
+	
 	@RequestMapping(value = "/checkTran")
 	public String checkTran(ModelMap model) {
 		try{

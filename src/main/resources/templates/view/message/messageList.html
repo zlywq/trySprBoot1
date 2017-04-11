@@ -26,7 +26,7 @@
     			
     			<td>content</td>   
     		</tr>
-    		<tr th:if="${messageList.empty}">
+    		<tr th:if="${#lists.isEmpty(messageList)  }">
 					<td colspan="5">No data</td>
 			</tr>
 			<tr th:each="message:${messageList}">

@@ -24,7 +24,7 @@ public interface BbsPostMapper {
 	@Select("SELECT  *  FROM BbsPost WHERE userId = #{userId} AND isDeleted=0 ORDER BY createTime DESC")
 	List<BbsPost> getByUserId(@Param("userId") long userId);
 	
-	
+	List<BbsPost> getOnlyDeleted();
 	
 	@Select("SELECT  *  FROM BbsPost WHERE isDeleted=0 ORDER BY createTime DESC")
 	List<BbsPost> getPosts();

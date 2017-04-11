@@ -113,20 +113,23 @@ public class DataSourceConfiguration2 {
         SqlSessionFactoryBean fb = new SqlSessionFactoryBean();
         fb.setDataSource(dataSource);
         
-        // 据说下面2句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
-        String mybatis_typeAliasesPackage = env.getProperty("mybatis.typeAliasesPackage"); //"g1.ibatisMp2"
-        logger.info("mybatis_typeAliasesPackage="+mybatis_typeAliasesPackage);
-        if (!Util1.isStringEmpty(mybatis_typeAliasesPackage)){
-        	fb.setTypeAliasesPackage(mybatis_typeAliasesPackage);// 指定基包
-        }else{
-        	fb.setTypeAliasesPackage("g1.ibatisMp2");
-        }
+        fb.setTypeAliasesPackage("g1.ibatisMp2");
+        fb.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath*:mappers/second/**/*.xml"));//
         
-        String mybatis_mapperLocations = env.getProperty("mybatis.mapperLocations");
-        logger.info("mybatis_mapperLocations="+mybatis_mapperLocations);
-        if (!Util1.isStringEmpty(mybatis_mapperLocations)){
-        	fb.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mybatis_mapperLocations));
-        }
+        
+        // 据说下面2句仅仅用于*.xml文件，如果整个持久层操作不需要使用到xml文件的话（只用注解就可以搞定），则不加
+//        String mybatis_typeAliasesPackage = env.getProperty("mybatis.typeAliasesPackage"); //"g1.ibatisMp2"
+//        logger.info("mybatis_typeAliasesPackage="+mybatis_typeAliasesPackage);
+//        if (!Util1.isStringEmpty(mybatis_typeAliasesPackage)){
+//        	fb.setTypeAliasesPackage(mybatis_typeAliasesPackage);// 指定基包
+//        }else{
+//        	fb.setTypeAliasesPackage("g1.ibatisMp2");
+//        }
+//        String mybatis_mapperLocations = env.getProperty("mybatis.mapperLocations");
+//        logger.info("mybatis_mapperLocations="+mybatis_mapperLocations);
+//        if (!Util1.isStringEmpty(mybatis_mapperLocations)){
+//        	fb.setMapperLocations(new PathMatchingResourcePatternResolver().getResources(mybatis_mapperLocations));
+//        }
 
         return fb.getObject();
     }

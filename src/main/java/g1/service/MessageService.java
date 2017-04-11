@@ -64,6 +64,10 @@ public class MessageService {
 	public List<Message> getMessages(){
 		return messageMapper.getMessages();
 	}
+	
+	public List<Message> getOnlyDeleted(){
+		return messageMapper.getOnlyDeleted();
+	}
 
 	
 	public void checkFields(Message message,boolean isInsert){

@@ -24,7 +24,7 @@ public interface MessageMapper {
 	@Select("SELECT  *  FROM Message WHERE userId = #{userId} AND isDeleted=0 ORDER BY createTime DESC")
 	List<Message> getByUserId(@Param("userId") long userId);
 	
-	
+	List<Message> getOnlyDeleted();
 	
 	@Select("SELECT  *  FROM Message WHERE isDeleted=0 ORDER BY createTime DESC")
 	List<Message> getMessages();

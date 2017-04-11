@@ -107,6 +107,19 @@ public class PostController {
 		}
 		return "post/postList";
 	}
+	@RequestMapping(value = "/getOnlyDeleted")
+	public String getOnlyDeleted(ModelMap model) {
+		try{
+			List<BbsPost> postList = postService.getOnlyDeleted();
+			model.put("postList", postList);
+			model.put(Const.Key_success, true);
+		}catch(Exception e){
+			UtilMsg.retriveErrMsgAndCodeToMap_withLog(e, model);
+		}
+		return "post/postList";
+	}
+	
+	
 	
 	@RequestMapping(value = "/checkTran")
 	public String checkTran(ModelMap model) {

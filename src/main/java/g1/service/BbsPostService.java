@@ -64,6 +64,9 @@ public class BbsPostService {
 		return postMapper.getPosts();
 	}
 
+	public List<BbsPost> getOnlyDeleted(){
+		return postMapper.getOnlyDeleted();
+	}
 	
 	public void checkFields(BbsPost post,boolean isInsert){
 		String errMsg = null;
