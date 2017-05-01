@@ -13,6 +13,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import cmn2.util.Util1;
 
+
+/*
+试验发现抛error先进入ErrorHandleControllerAdvice，然后可能进入MyErrorController，
+比如当url扩展名是html时会进入到 MyErrorController.errorHtml中处理
+ */
 @ControllerAdvice(basePackageClasses = HomeController.class)
 public class ErrorHandleControllerAdvice extends ResponseEntityExceptionHandler {
 

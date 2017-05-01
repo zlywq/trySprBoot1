@@ -27,7 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 
-
+/*
+试验发现抛error先进入ErrorHandleControllerAdvice，然后可能进入MyErrorController，
+比如当url扩展名是html时会进入到 MyErrorController.errorHtml中处理
+ */
 /*
 摘录BasicErrorController和AbstractErrorController的代码实现了一个。
 之所以没继承 BasicErrorController ，是因为其构造函数需要ErrorProperties errorProperties，且没有自动注入，也不能为null值。估计得研究ErrorMvcAutoConfiguration的代码才能造一个这个出来。
