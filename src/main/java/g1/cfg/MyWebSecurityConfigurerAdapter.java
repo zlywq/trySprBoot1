@@ -84,7 +84,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 			
 			//<remember-me data-source-ref="dataSource" token-validity-seconds="1209600" /> 其中的data-source-ref目前发现用不着了，或者可能被下面的代码替换了
 			http.rememberMe().tokenValiditySeconds(1209600) //在网页上试验要注意勾选对应的checkbox。
-			//.tokenRepository(persistentTokenRepository())
+			//.tokenRepository(persistentTokenRepository()) //TODO 检查应该需要，应该是对应 persistent_logins 表的
 				.userDetailsService(myUserDetailsService());//...
 			
 			
@@ -101,12 +101,14 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
 //	RememberMeAuthenticationFilter r;
 //	SessionManagementFilter s;
 	
-//	@Bean//发现用不着
+//	@Bean//发现用不着 TODO 检查应该需要，应该是对应 persistent_logins 表的
 //	public PersistentTokenRepository persistentTokenRepository() {
 //		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
 //		db.setDataSource(dataSource);
 //		return db;
 //	}
+	
+
 	
 
 	private AuthenticationEntryPoint entryPoint() {

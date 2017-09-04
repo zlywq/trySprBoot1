@@ -2,8 +2,11 @@ package g1.cfg;
 
 
 
+import java.util.List;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
+import org.apache.commons.lang.StringUtils;
 import org.apache.tomcat.util.descriptor.web.SecurityCollection;
 import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +61,16 @@ public class TomcatExtConfig {
 	                //collection.addPattern("/logreg/login*");//fail
 	                //collection.addPattern("/logreg/reg*");
 	                
-	                collection.addPattern("/logreg/login");//ok 目前是可以跳转到https
-	                collection.addPattern("/logreg/reg");
+	                //collection.addPattern("/logreg/login");//ok 目前是可以跳转到https
+	                //collection.addPattern("/logreg/reg");
+	                //这里改为可选跳转到https，因为目前在浏览器里试了试，跳过去就跳不回来了。
+	                List<String> urlsNeedSecurity = tomcatExtProperties.getUrlsNeedSecurity();
+	                for(int i=0; i<urlsNeedSecurity.size(); i++){
+	                	String urlNeedSecurity = urlsNeedSecurity.get(i);
+	                	if (StringUtils.isNotEmpty(urlNeedSecurity)){
+	                		collection.addPattern(urlNeedSecurity);
+	                	}
+	                }
 	                
 	                constraint.addCollection(collection);
 	                context.addConstraint(constraint);
